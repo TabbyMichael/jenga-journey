@@ -8,14 +8,25 @@ interface MarketCardProps {
   price: number;
   change: number;
   currency?: string;
+  onClick?: () => void;
 }
 
-export function MarketCard({ title, symbol, price, change, currency = "USD" }: MarketCardProps) {
+export function MarketCard({ 
+  title, 
+  symbol, 
+  price, 
+  change, 
+  currency = "USD",
+  onClick 
+}: MarketCardProps) {
   const isPositive = change > 0;
   const isNegative = change < 0;
 
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow animate-fade-up">
+    <Card 
+      className="p-6 hover:shadow-lg transition-shadow animate-fade-up cursor-pointer"
+      onClick={onClick}
+    >
       <div className="space-y-2">
         <div className="flex justify-between items-start">
           <div>

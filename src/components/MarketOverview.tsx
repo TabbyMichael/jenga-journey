@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { MarketCard } from "./MarketCard";
+import { ChartDialog } from "./ChartDialog";
 
 const mockData = [
   {
@@ -32,18 +34,30 @@ const mockData = [
 ];
 
 export function MarketOverview() {
+  const [selectedMarket, setSelectedMarket] = useState<typeof mockData[0] | null>(null);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {mockData.map((market) => (
-        <MarketCard
-          key={market.symbol}
-          title={market.title}
-          symbol={market.symbol}
-          price={market.price}
-          change={market.change}
-          currency={market.currency}
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {mockData.map((market) => (
+          <MarketCard
+            key={market.symbol}
+            title={market.title}
+            symbol={market.symbol}
+            price={market.price}
+            change={market.change}
+            currency={market.currency}
+            onClick={() => setSelectedMarket(market)}
+          />
+        ))}
+      </div>
+      {selectedMarket && (
+        <ChartDialog
+          isOpen={!!selectedMarket}
+          onClose={() => setSelectedMarket(null)}
+          market={selectedMarket}
         />
-      ))}
-    </div>
+      )}
+    </>
   );
 }
